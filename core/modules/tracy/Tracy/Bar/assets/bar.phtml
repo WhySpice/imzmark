@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tracy;
+
+/**
+ * @var string $type
+ * @var \stdClass[] $panels
+ */
+?>
+
+<ul class="tracy-row" data-tracy-group="<?= Helpers::escapeHtml($type) ?>">
+<?php if ($type === 'main'): ?>
+	<li id="tracy-debug-logo" title="Debugger <?= Debugger::VERSION ?>">
+        <svg fill="#000000" viewBox="-2.4 -2.4 28.80 28.80" id="bug" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line" transform="rotate(45)"><g id="SVGRepo_bgCarrier" stroke-width="0"><path transform="translate(-2.4, -2.4), scale(0.8999999999999999)" d="M16,29.04873926565051C18.588022451153158,30.023347519449803,22.350196911864103,30.75819915739276,24.117593790283337,28.63122249315771C26.084381477601635,26.264288633812892,23.553500248348087,22.65169401406823,23.860040769939854,19.58956034452961C24.037227771947595,17.8195813484898,25.197015191614444,16.380791511089946,25.51907540978566,14.631363577171518C25.97748024181037,12.141313043327356,27.377178882380395,9.423273208779332,26.13807342988253,7.215309366523018C24.912489178455207,5.031438972493759,21.938749153976524,4.663232372145142,19.53356674738804,3.9657768206571564C17.13566964608082,3.270433864288269,14.571196578226669,2.2983998020683707,12.236959173560614,3.184259877976112C9.939663411686723,4.056100331705489,8.877869848880271,6.587186586882314,7.418054469195042,8.563701866741606C6.075992176404878,10.380785496039111,4.4152010510163615,12.05278930924708,4.0414096702827,14.28061428380846C3.6636180220416996,16.532281156062304,3.9930837486374022,19.028856480572593,5.354682802798283,20.861553468291582C6.645873489449891,22.599481586533074,9.329739897591255,22.388731164168924,11.045951933732898,23.708649260291867C13.01040819468716,25.21948901276494,13.68075196336351,28.175347198241447,16,29.04873926565051" fill="#b217b5" strokewidth="0"></path></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.672"></g><g id="SVGRepo_iconCarrier"><path id="secondary" d="M17,15V10a1,1,0,0,0-1-1H8a1,1,0,0,0-1,1v5a5,5,0,0,0,5,5h0A5,5,0,0,0,17,15Z" style="fill: #ffadfc; stroke-width: 2;"></path><path id="primary" d="M16,18h0A5,5,0,0,1,18.72,21V21" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-2" data-name="primary" d="M8,18H8A5,5,0,0,0,5.28,21V21" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-3" data-name="primary" d="M17.22,3h0A2.82,2.82,0,0,1,15.4,5.05l-.89.31" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-4" data-name="primary" d="M9.49,5.36,8.6,5.05A2.82,2.82,0,0,1,6.78,3h0" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-5" data-name="primary" d="M21,7.1,20.47,8A5.42,5.42,0,0,1,17,10.47h0" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-6" data-name="primary" d="M17,13.5h0a5.06,5.06,0,0,1,3.65,2.31l.35.55" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-7" data-name="primary" d="M7,10.47H7A5.42,5.42,0,0,1,3.53,8L3,7.1" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-8" data-name="primary" d="M3,16.36l.35-.55A5.06,5.06,0,0,1,7,13.5H7" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path><path id="primary-9" data-name="primary" d="M17,15V10a1,1,0,0,0-1-1H8a1,1,0,0,0-1,1v5a5,5,0,0,0,5,5h0A5,5,0,0,0,17,15ZM15,9H9V7a3,3,0,0,1,3-3h0a3,3,0,0,1,3,3Z" style="fill: none; stroke: #030303; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></g></svg>
+    </li>
+<?php endif; if ($type === 'redirect'): ?>
+	<li><span title="Previous request before redirect">redirect</span></li>
+<?php endif; if ($type === 'ajax'): ?>
+	<li>AJAX</li>
+<?php endif ?>
+
+<?php foreach ($panels as $panel): if ($panel->tab) { ?>
+	<li><?php if ($panel->panel): ?><a href="#" rel="tracy-debug-panel-<?= $panel->id ?>"><?= trim($panel->tab) ?></a><?php else: echo '<span>', trim($panel->tab), '</span>'; endif ?></li>
+<?php } endforeach ?>
+
+<?php if ($type === 'main'): ?>
+	<li><a href="#" data-tracy-action="close" title="close debug bar">&times;</a></li>
+<?php endif ?>
+</ul>
